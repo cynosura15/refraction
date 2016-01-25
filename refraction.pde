@@ -42,7 +42,7 @@ float distanceEntrePoints(float x1, float y1, float x2, float y2)
 }
 void fonction(float plx, float ply)
 { 
-  float n1 = 1, n2 = 1.33;
+  float n1 = 1.00, n2 = 1.33;
   
   PVector p = new PVector(400, 300); // Le milieu du cercle
   stroke(255,0,0);
@@ -51,7 +51,7 @@ void fonction(float plx, float ply)
   float coteOp;
   float coteAdj;
   coteOp = abs(mouseX-p.x);
-  coteAdj = abs(mouseX-p.y);
+  coteAdj = abs(mouseY-p.y);
   
   float i;
   i = (atan(coteOp/coteAdj));
@@ -70,7 +70,7 @@ void fonction(float plx, float ply)
   }
   else if(mouseX > 400) {
     pxr = p.x-(tan(r)*p.y);
-    pxr2 = int(p.x-(tan(i)*300));
+    pxr2 = p.x-(tan(i)*300);
   }
   if(mouseY < p.y) {
      pyr = 600;
@@ -80,10 +80,21 @@ void fonction(float plx, float ply)
      pyr = 0;
      pyr2 = 600;
   }
+  int intensiteR; //intensite du rayon refracter
+  int intensiteR2; // intensiter du rayon reflechi
+  if(Float.isNaN(r))
+  {
+    print(".");
+    intensiteR2 = 255;
+  }
+  else
+  {
+    intensiteR2 = int(i*180/PI+60); //Calcul chiant et degueu 
+  }
+  intensiteR = int(255-r*180/PI);
   
-  println("!!!!  " + pxr2);
-  println("!!  " + mouseX);
+  stroke(255,0,0,intensiteR);
   line(p.x,p.y,pxr,pyr); //rayon refracté
-  stroke(0,255,0);
+  stroke(255,0,0,intensiteR2);
   line(p.x,p.y,pxr2,pyr2);
 }
